@@ -30,7 +30,40 @@ public class DocumentMetadataServlet extends HttpServlet {
     		HttpServletResponse response)
 	        throws ServletException, IOException
     {
-    	
+
+	    String sDocId = request.getParameter("literal.doc_id");
+	    String sMetadataDocId = request.getParameter("metadata.doc_id");
+	    
+	    if (sDocId == null && sMetadataDocId == null) {
+	    	response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    out.println("<title>KnowledgeTree Metadata Error : </title> <body bgcolor=FFFFFF>");
+		    out.println("Invalid Parameters: You need to provide the literal.doc_id as well as the metadata.doc_id you'd like to insert");
+		    out.println("</body>");
+		    out.close();
+		    System.exit(1);
+	    }
+	    
+	    if (sDocId == null && sMetadataDocId != null) {
+	    	response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    out.println("<title>KnowledgeTree Metadata Error : </title> <body bgcolor=FFFFFF>");
+		    out.println("Invalid Parameters: You need to provide the S3/KT document id of the document your working on");
+		    out.println("</body>");
+		    out.close();
+		    System.exit(1);
+	    }
+	    	
+	    if (sDocId != null && sMetadataDocId == null) {
+	    	response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    out.println("<title>KnowledgeTree Metadata Error : </title> <body bgcolor=FFFFFF>");
+		    out.println("Invalid Parameters: You need to provide the metadata.doc_id you'd like to insert");
+		    out.println("</body>");
+		    out.close();	    	
+		    System.exit(1);
+	    }
+	    
 		// Create a factory for disk-based file items
     	FileItemFactory factory = new DiskFileItemFactory();
     	// Create a new file upload handler
@@ -65,7 +98,7 @@ public class DocumentMetadataServlet extends HttpServlet {
     	            		
             	            //Writing the metadata to the uploaded file
             	            Map <String, String> metadata = new HashMap<String, String>();
-            	            metadata.put("DOC_ID", "KT SERVLET DOC_ID : 001");
+            	            metadata.put("DOC_ID", sMetadataDocId);
             	            KTMetaData ktm = KTMetaData.get();
             	            int res  = ktm.writeMetadata(fileName, targetFile, metadata);
             	            
@@ -150,21 +183,6 @@ public class DocumentMetadataServlet extends HttpServlet {
         }
     	*/
         
-	    response.setContentType("text/html");
-	    PrintWriter out = response.getWriter();
-	
-	    out.println("<title>KnowledgeTree Servlets POST</title> <body bgcolor=FFFFFF>");
-	
-	    out.println("<h2>POST Called</h2>");
-	
-	    String DATA = request.getParameter("DATA");
-	
-		if(DATA != null){
-		  out.println(DATA);
-		} else {
-		  out.println("No text entered.");
-		}
-	    out.close();
   }
     
     
