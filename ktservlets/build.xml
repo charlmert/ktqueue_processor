@@ -1,0 +1,117 @@
+<project name="KowledgeTreeServlets" default="dist" basedir=".">
+    <description>
+        Build file for KT Servlets
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="lib"  location="lib"/>
+
+  <!-- The compilation classpath -->
+  <path id="compile.classpath">
+    <fileset dir="${lib}">
+      <include name="*.jar" />
+    </fileset>
+
+    <!-- The Servlet API -->
+    <fileset dir="${lib}/">
+      <include name="servlet-api.jar" />
+    </fileset>
+
+    <fileset dir="${lib}/">
+      <include name="commons-fileupload-1.2.1.jar" />
+    </fileset>
+
+    <fileset dir="${lib}/poi-3.6/">
+      <include name="*.jar" />
+      <include name="poi-ooxml-3.6.jar" />
+    </fileset>
+  	
+     <fileset dir="${lib}/">
+<include name="commons-logging-1.1.jar" />
+<include name="xstream-1.3.1.jar" />
+<include name="ws-commons-util-1.0.1.jar" />
+<include name="poi-3.6/poi-ooxml-schemas-3.6.jar" />
+<include name="poi-3.6/poi-3.6.jar" />
+<include name="poi-3.6/poi-examples-3.6.jar" />
+<include name="poi-3.6/poi-ooxml-3.6.jar" />
+<include name="poi-3.6/poi-contrib-3.6.jar" />
+<include name="poi-3.6/poi-scratchpad-3.6.jar" />
+<include name="poi-3.6/ooxml-lib/geronimo-stax-api_1.0_spec-1.0.jar" />
+<include name="poi-3.6/ooxml-lib/dom4j-1.6.1.jar" />
+<include name="poi-3.6/ooxml-lib/xmlbeans-2.3.0.jar" />
+<include name="juh-3.0.1.jar" />
+<include name="lucene-core-2.1.0.jar" />
+<include name="jurt-3.0.1.jar" />
+<include name="commons-io-1.4.jar" />
+<include name="junit-3.8.1.jar" />
+<include name="log4j-1.2.14.jar" />
+<include name="slf4j-jdk14-1.5.6.jar" />
+<include name="xmlrpc-server-3.0.jar" />
+<include name="commons-lang-2.3.jar" />
+<include name="xmlrpc-common-3.0.jar" />
+<include name="tika-app-0.4.jar" />
+<include name="ridl-3.0.1.jar" />
+<include name="commons-codec-1.3.jar" />
+<include name="lucene-highlighter-2.1.0.jar" />
+<include name="unoil-3.0.1.jar" />
+<include name="jodconverter-2.2.2.jar" />
+<include name="slf4j-api-1.5.6.jar" />
+    </fileset>
+
+  </path>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${build}" classpathref="compile.classpath" nowarn="true">
+        <compilerarg value="-Xlint:none"/>
+        <compilerarg value="-Xlint:deprecation"/>
+    </javac>
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/" />
+
+  	<copy todir="jar/">
+  	    <fileset dir="${build}/"/>
+    </copy>
+
+  	<copy todir="war/WEB-INF/lib/">
+  	    <fileset dir="${lib}/"/>
+    </copy>
+
+  	<jar destfile="ktservlets.jar" basedir="jar/" manifest="MANIFEST.MF"  />
+  	
+    <war destfile="${dist}/ktservlets.war" webxml="war/WEB-INF/web.xml">
+      <fileset dir="war/"/>
+      <classes dir="${build}"/>
+    </war>
+
+    <copy file="${dist}/ktservlets.war"
+          tofile="/var/lib/tomcat6/webapps/ktservlets.war"/>
+
+
+    <!-- Put everything in ${build} into the KTDocumentInexer-${DSTAMP}.jar file -->
+    <!--jar jarfile="${dist}/kt.jar" basedir="${build}"/-->
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
+

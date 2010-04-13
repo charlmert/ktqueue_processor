@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Created-By: Ant
+Build-By: charl
+Build-Jdk: 1.5.0_16
+Implementation-Title: KnowledgeTree Servlets
+Implementation-Vendor: KnowledgeTree
+Implementation-Version: 1.0
