@@ -43,7 +43,7 @@ class PDFConvert {
             } 
         }
         
-        $reason =  array('1', 'PDFConvert Failed: Couldn\'t Find any Valid Parameters  [' . __FUNCTION__ . ']');
+        $reason =  array('1', 'PDFConvert Failed: Couldn\'t Find any Required Parameters  [' . __FUNCTION__ . ']');
         return $valid;
     }
     
@@ -117,7 +117,7 @@ class PDFConvert {
     
         $url = $url . '&outputFormat=pdf';
 
-        echo "$url inputDocument=@$srcFile";
+        echo "curl \"$url\" -F \"inputDocument=@$srcFile\"\n";
         
         $file = array('inputDocument'=>'@'.$srcFile); //Formatting for post file upload
         $ch = curl_init($url);
@@ -134,7 +134,7 @@ class PDFConvert {
         
 		if ($info['http_code'] != 200)
 		{
-		    $err_code = ($info['http_code'] != '')? $info['http_code'] : '0';
+		    $err_code = ($info['http_code'] != '')? $info['http_code'] : 'NULL';
 		    return array($err_code, 'PDF Convertion Failed: BAD HTTP CODE ['.$err_code.'] | [' . __FUNCTION__ . ']');
 		} else {
 		    //Success Code 200
@@ -150,7 +150,7 @@ class PDFConvert {
 		    return array('0', 'PDF Convertion Success: PDF saved to ['. $destFile .'] | [' . __FUNCTION__ . ']');
 		}
         
-    }    
+    }
     
 }
 
