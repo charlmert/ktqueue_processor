@@ -102,7 +102,9 @@
     <copy file="${dist}/ktservlets.war"
           tofile="/var/lib/tomcat6/webapps/ktservlets.war"/>
 
-
+    <copy file="${dist}/ktservlets.war"
+          tofile="/home/charl/study/java/jodconverter/ktlive-tomcat6/webapps/ktservlets.war"/>
+  	
     <!-- Put everything in ${build} into the KTDocumentInexer-${DSTAMP}.jar file -->
     <!--jar jarfile="${dist}/kt.jar" basedir="${build}"/-->
   </target>

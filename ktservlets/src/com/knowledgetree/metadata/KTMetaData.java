@@ -57,7 +57,7 @@ public class KTMetaData {
 		return metaDataHandler;
 	}
 	
-    public int writeMetadata(String fileName, String targetFile, java.util.Map metadata)
+    public int writeMetadata(String fileName, String targetFile, java.util.Map<String, String> metadata)
     {
         this.logger.debug("POI Properties: Write metadata to file " + fileName);
         POIFSFileSystem poifs;

@@ -1,18 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
+<style>
+.descriptiveText
+{
+    color: #666;
+}
+
+</style>
 <head>
     <title>KnowledgeTree Servlets | KnowledgeTree</title>
 </head>
 <body>
+
 <p class="descriptiveText">This REST API allows for document metadata insertion/deletion/creation. The general mechanism is such that you have to pass the file to the servlet and invoke any metadata operations on it to be returned as a downloadable file. You can also tell the API where to fetch the file with an accessible URI. In this case it will pull the file from the URI, do document metadata operations and return the result as a downloadable file.
- </p>
+</p>
 
 <div class="twocolumn">
 <fieldset>
 <legend>Usage:</legend>
 
-<form action="metadata/update?literal.doc_id=1234&metadata.doc_id=newid007" method="POST" enctype="multipart/form-data">
+<form action="metadata/update?metadata=1234&metadata.doc_id=KT001&Name1=Test1&Name2=Test2&Name3=Test3" method="POST" enctype="multipart/form-data">
 	<input type="FILE" name="file_name"/>
 	<input type="submit" name="submit"/>
 </form>
